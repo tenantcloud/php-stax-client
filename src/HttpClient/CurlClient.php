@@ -198,12 +198,12 @@ class CurlClient implements ClientInterface
 				break;
 			case 'post':
 				$opts[\CURLOPT_POST] = 1;
-				$opts[\CURLOPT_POSTFIELDS] = $hasFile ? $params : $this->encodeParameters($params);
+				$opts[\CURLOPT_POSTFIELDS] = $hasFile ? $params : json_encode($params);
 
 				break;
 			case 'put':
 				$opts[\CURLOPT_CUSTOMREQUEST] = 'PUT';
-				$opts[\CURLOPT_POSTFIELDS] = $hasFile ? $params : $this->encodeParameters($params);
+				$opts[\CURLOPT_POSTFIELDS] = $hasFile ? $params : json_encode($params);
 
 				break;
 			case 'delete':
@@ -220,31 +220,11 @@ class CurlClient implements ClientInterface
 				throw new Exception\UnexpectedValueException("Unrecognized method {$method}");
 		}
 
-		// By default for large request body sizes (> 1024 bytes), cURL will
-		// send a request without a body and with a `Expect: 100-continue`
-		// header, which gives the server a chance to respond with an error
-		// status code in cases where one can be determined right away (say
-		// on an authentication problem for example), and saves the "large"
-		// request body from being ever sent.
-		//
-		// Unfortunately, the bindings don't currently correctly handle the
-		// success case (in which the server sends back a 100 CONTINUE), so
-		// we'll error under that condition. To compensate for that problem
-		// for the time being, override cURL's behavior by simply always
-		// sending an empty `Expect:` header.
-		$headers[] = 'Expect: ';
-
 		$opts[\CURLOPT_URL] = $absUrl;
 		$opts[\CURLOPT_RETURNTRANSFER] = true;
 		$opts[\CURLOPT_CONNECTTIMEOUT] = $this->connectTimeout;
 		$opts[\CURLOPT_TIMEOUT] = $this->timeout;
 		$opts[\CURLOPT_HTTPHEADER] = $headers;
-		$opts[\CURLOPT_IPRESOLVE] = \CURL_IPRESOLVE_V4; // TODO need check
-
-		if (!isset($opts[\CURLOPT_HTTP_VERSION]) && $this->getEnableHttp2()) {
-			// For HTTPS requests, enable HTTP/2, if supported
-			$opts[\CURLOPT_HTTP_VERSION] = \CURL_HTTP_VERSION_2TLS;
-		}
 
 		[$responseBody, $responseCode, $responseHeaders] = $this->executeRequestWithRetries($opts, $absUrl);
 

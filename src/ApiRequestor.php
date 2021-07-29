@@ -82,13 +82,6 @@ class ApiRequestor
 	 */
 	public function handleErrorResponse(string $responseBody, int $responseCode, array $resp, array $responseHeaders)
 	{
-		if (!\is_array($resp) || !isset($resp['error'])) {
-			$msg = "Invalid response object from API: {$responseBody} "
-			  . "(HTTP response code was {$responseCode})";
-
-			throw new UnexpectedValueException($msg);
-		}
-
 		switch ($responseCode) {
 			case 422:
 				throw InvalidRequestException::factory('Validation error', $responseCode, $responseBody, $resp, $responseHeaders, $resp);
