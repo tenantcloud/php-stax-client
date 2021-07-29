@@ -17,14 +17,14 @@ use Stax\HttpClient\ClientInterface;
  */
 class ApiRequestor
 {
-	private static ?ClientInterface $_httpClient = null;
+	private static ?ClientInterface $httpClient = null;
 
 	private static array $OPTIONS_KEYS = ['api_key', 'api_base'];
 
-	private ?string $_apiKey;
+	private ?string $apiKey;
 
 	/** @var string */
-	private ?string $_apiBase;
+	private ?string $apiBase;
 
 	/**
 	 * ApiRequestor constructor.
@@ -34,12 +34,12 @@ class ApiRequestor
 	 */
 	public function __construct($apiKey = null, $apiBase = null)
 	{
-		$this->_apiKey = $apiKey;
+		$this->apiKey = $apiKey;
 
 		if (!$apiBase) {
 			$apiBase = Stax::$apiBase;
 		}
-		$this->_apiBase = $apiBase;
+		$this->apiBase = $apiBase;
 	}
 
 	/**
@@ -49,7 +49,7 @@ class ApiRequestor
 	 */
 	public static function setHttpClient($client): void
 	{
-		self::$_httpClient = $client;
+		self::$httpClient = $client;
 	}
 
 	/**
@@ -63,14 +63,20 @@ class ApiRequestor
 	}
 
 	/**
-	 * @return array tuple containing (ApiReponse, API key)
+	 * @param string $method
+	 * @param string $url
+	 * @param array|null $params
+	 * @param array|null $headers
+	 * 
+	 * @return array tuple containing (ApiResponse, API key)
+	 * @throws AuthenticationException
 	 */
 	public function request(string $method, string $url, array $params = null, array $headers = null): array
 	{
 		$params = $params ?: [];
 		$headers = $headers ?: [];
-		[$responseBody, $responseCode, $responseHeaders, $myApiKey] = $this->_requestRaw($method, $url, $params, $headers);
-		$json = $this->_interpretResponse($responseBody, $responseCode, $responseHeaders);
+		[$responseBody, $responseCode, $responseHeaders, $myApiKey] = $this->requestRaw($method, $url, $params, $headers);
+		$json = $this->interpretResponse($responseBody, $responseCode, $responseHeaders);
 		$resp = new ApiResponse($responseBody, $responseCode, $responseHeaders, $json);
 
 		return [$resp, $myApiKey];
@@ -96,9 +102,9 @@ class ApiRequestor
 		}
 	}
 
-	private function _requestRaw(string $method, string $url, array $params, array $headers): array
+	private function requestRaw(string $method, string $url, array $params, array $headers): array
 	{
-		$myApiKey = $this->_apiKey;
+		$myApiKey = $this->apiKey;
 
 		if (!$myApiKey) {
 			$myApiKey = Stax::$apiKey;
@@ -126,7 +132,7 @@ class ApiRequestor
 			}
 		}
 
-		$absUrl = $this->_apiBase . $url;
+		$absUrl = $this->apiBase . $url;
 		$defaultHeaders = $this->_defaultHeaders($myApiKey);
 
 		$hasFile = false;
@@ -134,7 +140,7 @@ class ApiRequestor
 		foreach ($params as $k => $v) {
 			if (\is_resource($v)) {
 				$hasFile = true;
-				$params[$k] = self::_processResourceParam($v);
+				$params[$k] = self::processResourceParam($v);
 			} elseif ($v instanceof CURLFile) {
 				$hasFile = true;
 			}
@@ -169,7 +175,7 @@ class ApiRequestor
 	 *
 	 * @return CURLFile|string
 	 */
-	private function _processResourceParam($resource)
+	private function processResourceParam($resource)
 	{
 		if ('stream' !== \get_resource_type($resource)) {
 			throw new InvalidArgumentException('Attempted to upload a resource that is not a stream');
@@ -185,7 +191,7 @@ class ApiRequestor
 		return new CURLFile($metaData['uri']);
 	}
 
-	private function _interpretResponse(string $responseBody, int $responseCode, array $responseHeaders = []): array
+	private function interpretResponse(string $responseBody, int $responseCode, array $responseHeaders = []): array
 	{
 		$resp = \json_decode($responseBody, true);
 		$jsonError = \json_last_error();
@@ -212,10 +218,10 @@ class ApiRequestor
 
 	private function httpClient(): ClientInterface
 	{
-		if (!self::$_httpClient) {
-			self::$_httpClient = HttpClient\CurlClient::instance();
+		if (!self::$httpClient) {
+			self::$httpClient = HttpClient\CurlClient::instance();
 		}
 
-		return self::$_httpClient;
+		return self::$httpClient;
 	}
 }

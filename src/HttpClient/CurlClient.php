@@ -517,8 +517,6 @@ class CurlClient implements ClientInterface
 			return true;
 		}
 
-		return !(\array_keys($array) !== \range(0, \count($array) - 1))
-
-		 ;
+		return !(\array_keys($array) !== \range(0, \count($array) - 1));
 	}
 }
