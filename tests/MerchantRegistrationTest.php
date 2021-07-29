@@ -23,6 +23,17 @@ class MerchantRegistrationTest extends TestCase
 		static::assertInstanceOf(MerchantRegistration::class, $resource);
 	}
 
+	public function testAssertUploadFile(): void
+	{
+		$this->expectsRequest(
+			'post',
+			'merchant/123/registration/file'
+		);
+
+		$resource = (new MerchantRegistration())->uploadFile('123', []);
+		static::assertInstanceOf(MerchantRegistration::class, $resource);
+	}
+
 	public function testAssertFind(): void
 	{
 		$this->expectsRequest(

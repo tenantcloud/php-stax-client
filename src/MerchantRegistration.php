@@ -98,4 +98,11 @@ class MerchantRegistration extends ApiResource
 
 		return $this;
 	}
+
+	public function uploadFile(string $merchantId, array $data): self
+	{
+		$this->request('post', "merchant/{$merchantId}/registration/file", $data);
+
+		return $this;
+	}
 }

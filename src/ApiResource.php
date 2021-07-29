@@ -20,20 +20,7 @@ abstract class ApiResource extends BaseObject
 		$requestor = new ApiRequestor($this->apiKey);
 		[$response] = $requestor->request($method, $url, $params, $headers);
 
-		if (\array_key_exists('id', $response->json)) {
-			$this->fields = $response->json;
-
-			return $response->json;
-		}
-
-		// Fix for response with static text
-		if (\array_key_exists('html', $response->json)) {
-			$this->fields = $response->json;
-
-			return $response->json;
-		}
-
-		if (\array_key_exists('data', $response->json)) {
+		if (\array_key_exists('current_page', $response->json) && \array_key_exists('data', $response->json)) {
 			return (new Paginator())->buildFromResponse($response->json, $this);
 		}
 
@@ -52,6 +39,8 @@ abstract class ApiResource extends BaseObject
 
 			return (new Paginator())->buildFromResponse($pagination, $this);
 		}
+
+		$this->fields = $response->json;
 
 		return $response->json;
 	}

@@ -137,7 +137,7 @@ trait TestHelper
 				$params === null ? static::anything() : static::identicalTo($params),
 				static::identicalTo($hasFile)
 			)
-			->willReturn(['{"data": [[]]}', 200, []])
+			->willReturn(['{"data": [[]], "current_page": 1}', 200, []])
 			;
 	}
 }
