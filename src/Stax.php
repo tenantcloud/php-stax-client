@@ -63,7 +63,7 @@ class Stax
 	}
 
 	/**
-	 * @return float Maximum delay between retries, in seconds, that will be respected from the Stripe API
+	 * @return float Maximum delay between retries, in seconds, that will be respected from the Stax API
 	 */
 	public static function getMaxRetryAfter(): float
 	{

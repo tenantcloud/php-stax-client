@@ -8,7 +8,7 @@ use Stax\ApiRequestor;
 use Stax\Stax;
 
 /**
- * Helper trait for Stripe test cases.
+ * Helper trait for Stax test cases.
  */
 trait TestHelper
 {
@@ -19,8 +19,7 @@ trait TestHelper
 	 */
 	protected function setUpConfig()
 	{
-		// Set up host and credentials for stripe-mock
-		Stax::setApiKey('sk_test_123');
+		Stax::setApiKey('api_key');
 
 		// Set up the HTTP client mocker
 		$this->clientMock = $this->createMock('\Stax\HttpClient\ClientInterface');
