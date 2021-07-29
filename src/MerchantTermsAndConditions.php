@@ -8,7 +8,7 @@ namespace Stax;
  * This route is used to generate the string of html which is used in the
  * Update Merchant Registration Data route to populate the electronic_signature.html_content.
  *
- * @property string $data terms and conditions html content.
+ * @property string $html terms and conditions html content.
  */
 class MerchantTermsAndConditions extends ApiResource
 {

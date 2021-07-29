@@ -202,7 +202,7 @@ class CurlClient implements ClientInterface
 
 				break;
 			case 'put':
-				$opts[\CURLOPT_PUT] = 1;
+				$opts[\CURLOPT_CUSTOMREQUEST] = 'PUT';
 				$opts[\CURLOPT_POSTFIELDS] = $hasFile ? $params : $this->encodeParameters($params);
 
 				break;

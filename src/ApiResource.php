@@ -26,6 +26,13 @@ abstract class ApiResource extends BaseObject
 			return $response->json;
 		}
 
+		// Fix for response with static text
+		if (\array_key_exists('html', $response->json)) {
+			$this->fields = $response->json;
+
+			return $response->json;
+		}
+
 		if (\array_key_exists('data', $response->json)) {
 			return (new Paginator())->buildFromResponse($response->json, $this);
 		}

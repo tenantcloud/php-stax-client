@@ -151,7 +151,7 @@ class ApiRequestor
 		if ($hasFile) {
 			$defaultHeaders['Content-Type'] = 'multipart/form-data';
 		} else {
-			$defaultHeaders['Content-Type'] = 'application/x-www-form-urlencoded';
+			$defaultHeaders['Content-Type'] = 'application/json';
 		}
 
 		$combinedHeaders = \array_merge($defaultHeaders, $headers);
@@ -207,6 +207,12 @@ class ApiRequestor
 
 		if ($responseCode < 200 || $responseCode >= 300) {
 			$this->handleErrorResponse($responseBody, $responseCode, $resp, $responseHeaders);
+		}
+
+		if (\is_string($resp)) {
+			$resp = [
+				'html' => $resp,
+			];
 		}
 
 		return $resp;
