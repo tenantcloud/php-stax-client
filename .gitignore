@@ -14,3 +14,9 @@ composer.lock
 
 # Ignore PHPStan local config
 .phpstan.neon
+
+# Ignore PHP Unit test cache
+.phpunit.result.cache
+
+# Ignore PHPUnit coverage file
+clover.xml

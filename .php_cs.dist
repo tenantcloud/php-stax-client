@@ -1,0 +1,32 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+	->in(__DIR__)
+	->exclude('.*')
+	->exclude('bootstrap/cache')
+	->exclude('docker')
+	->exclude('docs')
+	->exclude('gulp')
+	->exclude('node_modules')
+	->exclude('node_modules_cached')
+	->exclude('public')
+	->exclude('redis')
+	->exclude('/^resources\/(?!lang)/')
+	->exclude('sh')
+	->exclude('storage')
+	->exclude('tmp')
+	->exclude('vendor')
+	->exclude('vendor_cached')
+	->name('*.php')
+	->notName('_*.php')
+	->notName('*.blade.php')
+	->ignoreDotFiles(true)
+	->ignoreVCS(true);
+
+return (new PhpCsFixer\Config())
+	->setFinder($finder)
+	->setRiskyAllowed(true)
+	->setIndent("\t")
+	->setRules([
+		'@TenantCloud' => true,
+	]);

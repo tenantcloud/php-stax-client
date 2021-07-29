@@ -1,0 +1,48 @@
+{
+  "name": "tenantcloud/stax-client",
+  "type": "library",
+  "description": "Stax PHP Library",
+  "keywords": [
+    "stax",
+    "payment processing",
+    "api"
+  ],
+  "homepage": "https://github.com/tenantcloud/stax-client",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrii Tershak",
+      "email": "a.tershak@tenantcloud.com",
+      "homepage": "https://www.tenantcloud.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php" : "^7.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=8.0",
+    "friendsofphp/php-cs-fixer": "~2.18.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Stax\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Stax\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
