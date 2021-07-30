@@ -4,3 +4,4 @@
 # Composer package (for purposes of making it smaller).
 /phpunit.xml export-ignore
 /tests export-ignore
+/.github export-ignore
