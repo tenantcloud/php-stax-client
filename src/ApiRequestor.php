@@ -63,13 +63,7 @@ class ApiRequestor
 	}
 
 	/**
-	 * @param string $method
-	 * @param string $url
-	 * @param array|null $params
-	 * @param array|null $headers
-	 * 
 	 * @return array tuple containing (ApiResponse, API key)
-	 * @throws AuthenticationException
 	 */
 	public function request(string $method, string $url, array $params = null, array $headers = null): array
 	{
