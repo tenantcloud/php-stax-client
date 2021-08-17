@@ -5,7 +5,7 @@ applications written in the PHP language.
 
 ## Requirements
 
-PHP 7.1.0 and later.
+PHP 7.4.0 and later.
 
 ## Composer
 

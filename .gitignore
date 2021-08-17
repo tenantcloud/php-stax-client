@@ -3,7 +3,7 @@
 /vendor/
 
 # If the vendor directory isn't being commited the composer.lock file should also be ignored
-composer.lock
+/composer.lock
 
 # Ignore IDE's configuration files
 .idea
@@ -14,3 +14,9 @@ composer.lock
 
 # Ignore PHPStan local config
 .phpstan.neon
+
+# Ignore PHP Unit test cache
+.phpunit.result.cache
+
+# Ignore PHPUnit coverage file
+clover.xml

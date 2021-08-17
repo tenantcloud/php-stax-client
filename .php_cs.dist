@@ -1,0 +1,18 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+	->in(__DIR__)
+	->exclude('.*')
+	->exclude('vendor')
+	->name('*.php')
+	->notName('_*.php')
+	->ignoreDotFiles(true)
+	->ignoreVCS(true);
+
+return (new PhpCsFixer\Config())
+	->setFinder($finder)
+	->setRiskyAllowed(true)
+	->setIndent("\t")
+	->setRules([
+		'@TenantCloud' => true,
+	]);
