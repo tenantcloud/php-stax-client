@@ -22,9 +22,7 @@ class MerchantApiKey extends ApiResource
 {
 	/**
 	 * @param string $merchantId
-	 * @param array $data
-	 *
-	 * @return MerchantApiKey
+	 * @param array  $data
 	 */
 	public function create(string $merchantId, array $data = []): self
 	{
@@ -40,5 +38,4 @@ class MerchantApiKey extends ApiResource
 	{
 		return $this->request('get', "merchant/{$merchantId}/apikey");
 	}
-
 }
