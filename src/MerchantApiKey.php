@@ -13,10 +13,10 @@ namespace Stax;
  * @property string|null $email_verified_at
  * @property string|null $created_at
  * @property string|null $updated_at
- * @property string|null $deleted_at
+ * @property string|null $deleted_ats
  * @property string|null $team_role
  * @property string|null $team_admin
- * @property string $api_key
+ * @property string      $api_key
  */
 class MerchantApiKey extends ApiResource
 {
