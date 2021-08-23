@@ -20,10 +20,6 @@ namespace Stax;
  */
 class MerchantApiKey extends ApiResource
 {
-	/**
-	 * @param string $merchantId
-	 * @param array  $data
-	 */
 	public function create(string $merchantId, array $data = []): self
 	{
 		$this->request('post', "merchant/{$merchantId}/apikey", $data);
@@ -31,9 +27,6 @@ class MerchantApiKey extends ApiResource
 		return $this;
 	}
 
-	/**
-	 * @param string $merchantId
-	 */
 	public function all(string $merchantId): Paginator
 	{
 		return $this->request('get', "merchant/{$merchantId}/apikey");
