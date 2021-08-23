@@ -53,6 +53,13 @@ class Merchant extends ApiResource
 		return $this;
 	}
 
+	public function update(string $id, array $data): self
+	{
+		$this->request('put', "merchant/{$id}", $data);
+
+		return $this;
+	}
+
 	/**
 	 * @param string $id the ID of the merchant account to find
 	 *
