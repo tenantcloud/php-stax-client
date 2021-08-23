@@ -2,6 +2,8 @@
 
 namespace Stax;
 
+use Stax\Exception\InvalidArgumentException;
+
 /**
  * This is an object representing a Stax merchant account. You can retrieve it to see
  * properties on the account like its current e-mail address or account status.
@@ -61,6 +63,24 @@ class Merchant extends ApiResource
 		$this->request('get', "merchant/{$id}");
 
 		return $this;
+	}
+
+	public function createApiKey(array $data = []): MerchantApiKey
+	{
+		if (!$this->id) {
+			throw new InvalidArgumentException();
+		}
+
+		return (new MerchantApiKey($this->apiKey))->create($this->id, $data);
+	}
+
+	public function apiKeys(): Paginator
+	{
+		if (!$this->id) {
+			throw new InvalidArgumentException();
+		}
+
+		return (new MerchantApiKey($this->apiKey))->all($this->id);
 	}
 
 	/**
