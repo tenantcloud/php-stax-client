@@ -1,5 +1,5 @@
 {
-  "name": "tenantcloud/stax-client",
+  "name": "tenantcloud/php-stax-client",
   "type": "library",
   "description": "Stax PHP Library",
   "keywords": [
@@ -7,7 +7,7 @@
     "payment processing",
     "api"
   ],
-  "homepage": "https://github.com/tenantcloud/stax-client",
+  "homepage": "https://github.com/tenantcloud/php-stax-client",
   "license": "MIT",
   "authors": [
     {
