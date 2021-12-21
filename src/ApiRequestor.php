@@ -8,6 +8,7 @@ use Stax\Exception\ForbiddenException;
 use Stax\Exception\InvalidArgumentException;
 use Stax\Exception\InvalidRequestException;
 use Stax\Exception\NotFoundException;
+use Stax\Exception\TooManyRequestsException;
 use Stax\Exception\UnauthorizedException;
 use Stax\Exception\UnexpectedValueException;
 use Stax\HttpClient\ClientInterface;
@@ -82,6 +83,8 @@ class ApiRequestor
 	public function handleErrorResponse(string $responseBody, int $responseCode, array $resp, array $responseHeaders)
 	{
 		switch ($responseCode) {
+			case 429:
+				throw TooManyRequestsException::factory('Too many requests error', $responseCode, $responseBody, $resp, $responseHeaders);
 			case 422:
 				throw InvalidRequestException::factory('Validation error', $responseCode, $responseBody, $resp, $responseHeaders, $resp);
 			case 401:
