@@ -40,6 +40,22 @@ abstract class ApiResource extends BaseObject
 			return (new Paginator())->buildFromResponse($pagination, $this);
 		}
 
+		// Fix to custom build pagination if response has only data key
+		if (\is_array($response->json) && \array_key_exists('data', $response->json)) {
+			$total = \count($response->json['data']);
+			$pagination = [
+				'data'         => $response->json['data'],
+				'total'        => $total,
+				'per_page'     => $total,
+				'current_page' => 1,
+				'last_page'    => 1,
+				'from'         => 1,
+				'to'           => $total,
+			];
+
+			return (new Paginator())->buildFromResponse($pagination, $this);
+		}
+
 		$this->fields = $response->json;
 
 		return $response->json;
