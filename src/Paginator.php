@@ -31,7 +31,7 @@ class Paginator
 			if (property_exists(self::class, $key)) {
 				if ($key === 'data') {
 					foreach ($value as $data) {
-						$this->data[] = $class->fromResponse($data);
+						$this->data[] = clone $class->fromResponse($data);
 					}
 				} else {
 					$this->{$key} = $value;
