@@ -4,6 +4,7 @@ namespace Stax;
 
 use ArrayAccess;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 /**
  * Class BaseObject.
@@ -55,6 +56,8 @@ class BaseObject implements ArrayAccess, JsonSerializable
 	}
 
 	// ArrayAccess methods
+
+	#[ReturnTypeWillChange]
 	public function offsetSet($k, $v)
 	{
 		$this->{$k} = $v;
@@ -65,11 +68,13 @@ class BaseObject implements ArrayAccess, JsonSerializable
 		return \array_key_exists($k, $this->fields);
 	}
 
+	#[ReturnTypeWillChange]
 	public function offsetUnset($k)
 	{
 		unset($this->{$k});
 	}
 
+	#[ReturnTypeWillChange]
 	public function offsetGet($k)
 	{
 		return \array_key_exists($k, $this->fields) ? $this->fields[$k] : null;
