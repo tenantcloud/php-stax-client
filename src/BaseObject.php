@@ -56,6 +56,7 @@ class BaseObject implements ArrayAccess, JsonSerializable
 	}
 
 	// ArrayAccess methods
+
 	#[ReturnTypeWillChange]
 	public function offsetSet($k, $v)
 	{
